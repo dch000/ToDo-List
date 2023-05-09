@@ -66,9 +66,9 @@ class TableTableViewController: UITableViewController {
         
         //получаем объект из словаря по ключу isCompleted
         if (currentItem["isCompleted"] as? Bool) == true {
-            cell.accessoryType = .checkmark
+            cell.imageView?.image = UIImage(named: "check")
         } else {
-            cell.accessoryType = .none
+            cell.imageView?.image = UIImage(named: "uncheck")
         }
         
         return cell
@@ -100,9 +100,9 @@ class TableTableViewController: UITableViewController {
         
         //меняем значение
         if changeState(at: indexPath.row) == true {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+            tableView.cellForRow(at: indexPath)?.imageView?.image = UIImage(named: "check")
         } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+            tableView.cellForRow(at: indexPath)?.imageView?.image = UIImage(named: "uncheck")
         }
         
         
