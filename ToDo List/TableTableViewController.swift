@@ -11,7 +11,6 @@ class TableTableViewController: UITableViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.tableView.reloadData()
         }
-        
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -42,10 +41,6 @@ class TableTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //tableView.tableFooterView = UIView()
-        //tableView.backgroundColor = UIColor.lightGray
-        
     }
 
     // MARK: - Table view data source
