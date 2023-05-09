@@ -28,8 +28,11 @@ class TableTableViewController: UITableViewController {
         {(alert) in
             //Добавить новую запись
             let newItem = alertController.textFields![0].text
-            addItem(nameItem: newItem!)
-            self.tableView.reloadData()
+            //проверка на пустое поле
+            if newItem != "" {
+                addItem(nameItem: newItem!)
+                self.tableView.reloadData()
+            }
         }
     
         //добавляем кнопки в Alert Controller
