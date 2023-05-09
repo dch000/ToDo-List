@@ -7,6 +7,11 @@ class TableTableViewController: UITableViewController {
     // включаем / отключаем редактирование таблицы
     @IBAction func pushEditAction(_ sender: Any) {
         tableView.setEditing(!tableView.isEditing, animated: true)
+        // замедление обновления таблицы, для того чтобы анимация успела красиво отработать
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.tableView.reloadData()
+        }
+        
     }
     
     @IBAction func pushAddAction(_ sender: Any) {
@@ -33,13 +38,14 @@ class TableTableViewController: UITableViewController {
         alertController.addAction(alertAction2)
         
         present(alertController, animated: true, completion: nil)
-        
     }
-   
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //tableView.tableFooterView = UIView()
+        //tableView.backgroundColor = UIColor.lightGray
+        
     }
 
     // MARK: - Table view data source
@@ -69,6 +75,14 @@ class TableTableViewController: UITableViewController {
             cell.imageView?.image = UIImage(named: "check")
         } else {
             cell.imageView?.image = UIImage(named: "uncheck")
+        }
+        
+        if tableView.isEditing {
+            cell.textLabel?.alpha = 0.4
+            cell.imageView?.alpha = 0.4
+        } else {
+            cell.textLabel?.alpha = 1
+            cell.imageView?.alpha = 1
         }
         
         return cell
@@ -104,10 +118,7 @@ class TableTableViewController: UITableViewController {
         } else {
             tableView.cellForRow(at: indexPath)?.imageView?.image = UIImage(named: "uncheck")
         }
-        
-        
     }
-    
     
     // Метод меняет записи местами
     // Override to support rearranging the table view.
@@ -116,9 +127,20 @@ class TableTableViewController: UITableViewController {
         moveItem(fromIndex: fromIndexPath.row, toIndex: to.row)
         
         tableView.reloadData()
+    }
         
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        
+        if tableView.isEditing {
+            return .none
+        } else {
+            return .delete
+        }
     }
     
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
 
     /*
     // Override to support conditional rearranging of the table view.
