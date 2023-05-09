@@ -30,9 +30,20 @@ class TableTableViewController: UITableViewController {
    // генерация ячеек
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
         //вывод в ячеку текста из массива
-        cell.textLabel?.text = toDoItems[indexPath.row]
-
+        //задаем в константу переменную - словарь
+        let currentItem = toDoItems[indexPath.row]
+        //получаем имя как строку
+        cell.textLabel?.text = currentItem["Name"] as? String
+        
+        //получаем объект из словаря по ключу isCompleted
+        if (currentItem["isCompleted"] as? Bool) == true {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
@@ -55,7 +66,22 @@ class TableTableViewController: UITableViewController {
         }    
     }
     
-
+    //Нажатие на ячейку
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+         //отключаем залипание
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        //меняем значение
+        if changeState(at: indexPath.row) == true {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        } else {
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
+        
+        
+    }
+    
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
