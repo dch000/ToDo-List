@@ -4,6 +4,10 @@ import UIKit
 
 class TableTableViewController: UITableViewController {
 
+    // включаем / отключаем редактирование таблицы
+    @IBAction func pushEditAction(_ sender: Any) {
+        tableView.setEditing(!tableView.isEditing, animated: true)
+    }
     
     @IBAction func pushAddAction(_ sender: Any) {
         //создаем Alert Controller
@@ -105,12 +109,16 @@ class TableTableViewController: UITableViewController {
     }
     
     
-    /*
+    // Метод меняет записи местами
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        
+        moveItem(fromIndex: fromIndexPath.row, toIndex: to.row)
+        
+        tableView.reloadData()
+        
     }
-    */
+    
 
     /*
     // Override to support conditional rearranging of the table view.
