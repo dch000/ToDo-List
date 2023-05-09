@@ -6,9 +6,32 @@ class TableTableViewController: UITableViewController {
 
     
     @IBAction func pushAddAction(_ sender: Any) {
-        addItem(nameItem: "New Item")
-        tableView.reloadData()
+        //создаем Alert Controller
+        let alertController = UIAlertController(title: "Create new item", message: nil, preferredStyle: .alert)
+        // добавляем в него текстовое поле
+        alertController.addTextField { (textField) in
+            textField.placeholder = "New item name"
+        }
+        // описываем кнопку "Отмена"
+        let alertAction1 = UIAlertAction(title: "Cancel", style: .default)
+        {(alert) in }
+        // описываем кнопку "Сохранить"
+        let alertAction2 = UIAlertAction(title: "Create", style: .cancel)
+        {(alert) in
+            //Добавить новую запись
+            let newItem = alertController.textFields![0].text
+            addItem(nameItem: newItem!)
+            self.tableView.reloadData()
+        }
+    
+        //добавляем кнопки в Alert Controller
+        alertController.addAction(alertAction1)
+        alertController.addAction(alertAction2)
+        
+        present(alertController, animated: true, completion: nil)
+        
     }
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
